@@ -9,7 +9,7 @@
 
 * desactivamos el ambiente virtual
 
-    <code>deactivated</code>
+    <code>deactivate</code>
 
 * lista de librerias instaladas
 
