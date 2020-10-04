@@ -1,6 +1,6 @@
+import time
 import pygame
 import numpy as np
-import time
 
 pygame.init()
 
@@ -14,8 +14,8 @@ screen.fill(bg)
 
 nxC, nyC = 25, 25
 
-dimCW = width / nxC
-dimCH = height / nyC
+DIMCW = width / nxC
+DIMCH = height / nyC
 
 gameState = np.zeros((nxC, nyC))
 
@@ -33,7 +33,7 @@ pauseExect = False
 running = True
 
 while running:
-    
+
     newGameState = np.copy(gameState)
 
     screen.fill(bg)
@@ -56,7 +56,7 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if sum(pygame.mouse.get_pressed()) > 0:
                 posX, posY = pygame.mouse.get_pos()
-                celX, celY = int(np.floor(posX / dimCW)), int(np.floor(posY / dimCH))
+                celX, celY = int(np.floor(posX / DIMCW)), int(np.floor(posY / DIMCH))
 
                 newGameState[celX, celY] = not gameState[celX, celY]
 
@@ -81,23 +81,23 @@ while running:
 
                 #Regla2: Una celula viva con menos 2 o mas de 3 vecinas vivas, "muere"
                 if gameState[x, y] == 1 and ( n_neigh < 2 or n_neigh > 3):
-                    newGameState[x, y] = 0 
+                    newGameState[x, y] = 0
 
             # Creamos el poligono de cada celda a dibujar
             poly = [
-                ((x)   * dimCW, y * dimCH),
-                ((x+1) * dimCW, y * dimCH),
-                ((x+1) * dimCW, (y+1) * dimCH),
-                ((x)   * dimCW, (y+1) * dimCH)
+                ((x)   * DIMCW, y * DIMCH),
+                ((x+1) * DIMCW, y * DIMCH),
+                ((x+1) * DIMCW, (y+1) * DIMCH),
+                ((x)   * DIMCW, (y+1) * DIMCH)
             ]
-            
-            if pauseExect == True:
+
+            if pauseExect:
                 pygame.display.set_caption('En pause')
                 colorOfLines = 255, 0, 0
             else:
                 pygame.display.set_caption('El juego de la vida')
                 colorOfLines = 128, 128, 128
-            
+
             if newGameState[x, y] == 0:
                 pygame.draw.polygon(screen, colorOfLines, poly, 1)
             else:
